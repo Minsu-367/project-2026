@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>4번 퀴즈</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #eee;
+      font-family: "Arial", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .quiz-wrap {
+      width: 750px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .question {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .molecule-img {
+      width: 420px;
+      margin: 20px 0;
+    }
+
+    .choice-text {
+      font-size: 22px;
+      margin-top: 10px;
+    }
+
+    .choice-btn {
+      font-size: 20px;
+      padding: 10px 24px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .same {
+      background: #bde5ff;
+    }
+
+    .different {
+      background: #ffc9c9;
+    }
+
+    /* ===== 힌트 (1·2·3번과 동일한 느낌표) ===== */
+    .hint-wrap {
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .hint-icon {
+      width: 32px;
+      height: 32px;
+      background-color: #FFD84D;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: 900;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      flex-shrink: 0;
+    }
+
+    .hint-text {
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: left;
+      color: #333;
+    }
+
+    /* ===== 정답 화면 ===== */
+    .result {
+      display: none;
+      font-size: 26px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+
+    .close-btn {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 20px;
+      border-radius: 16px;
+      border: none;
+      background: #9c8cff;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="quiz-wrap">
+
+    <div class="question">
+      아래 분자 그림을 보고 알맞은 표현이 쓰인 버튼을 골라 보자!
+    </div>
+
+    <!-- 🔽 이미지 경로: HTML과 같은 폴더에 있으면 파일명만 -->
+    <img src="molecule.png" class="molecule-img" />
+
+    <div class="choice-text">
+      두 분자의 성질은
+      <button class="choice-btn same" onclick="wrong()">같다</button>
+      <button class="choice-btn different" onclick="correct()">다르다</button>
+    </div>
+
+    <!-- 힌트 -->
+    <div class="hint-wrap" id="hint">
+      <div class="hint-icon">!</div>
+      <div class="hint-text">
+        2개의 산소 원자로 이루어진 산소 분자는 우리가 숨을 쉴 수 있도록 해주지만<br>
+        3개의 산소 원자로 이루어진 오존 분자는 들이마실 경우 폐가 망가져!
+      </div>
+    </div>
+
+    <!-- 정답 결과 -->
+    <div class="result" id="result">
+      모든 문제를 맞혔어요! 🎉<br>
+      <button class="close-btn" onclick="window.close()">닫기</button>
+    </div>
+
+  </div>
+
+  <script>
+    const hint = document.getElementById("hint");
+    const result = document.getElementById("result");
+
+    function wrong() {
+      hint.style.display = "flex";
+    }
+
+    function correct() {
+      hint.style.display = "none";
+      result.style.display = "block";
+    }
+  </script>
+</body>
+</html>

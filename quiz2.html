@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>퀴즈 2</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background: #eaf6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .quiz-box {
+      background: #ffffff;
+      width: 750px; /* ✅ 요청 반영 */
+      padding: 36px;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      position: relative;
+    }
+
+    .quiz-number {
+      color: #7b4ddb;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 260px;
+      margin-bottom: 24px;
+    }
+
+    .sentence {
+      font-size: 20px;
+      line-height: 1.8;
+      word-spacing: 2px;
+    }
+
+    .blank-group {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 4px;
+      white-space: nowrap;
+      vertical-align: top;
+    }
+
+    input.answer {
+      width: 64px;
+      height: 44px;
+      font-size: 20px;
+      text-align: center;
+      border-radius: 12px;
+      border: 3px solid #b3d9ff;
+      outline: none;
+    }
+
+    .correct {
+      background: #d8f5c8;
+      border-color: #4caf50;
+    }
+
+    .wrong {
+      background: #ffc2c2;
+      border-color: #e53935;
+    }
+
+    /* 힌트 영역 – 항상 공간 확보 */
+    .hint-area {
+      min-height: 44px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+      font-size: 14px;
+      color: #555;
+      visibility: hidden;
+    }
+
+    .hint-area.show {
+      visibility: visible;
+    }
+
+    .hint-icon {
+      margin-right: 6px;
+      font-size: 16px;
+    }
+
+    .hint-text {
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    #result {
+      display: none;
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      font-weight: bold;
+      color: #4caf50;
+      background: #ffffff;
+      padding: 20px 40px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+
+    #checkBtn {
+      background: #4a90e2;
+      color: white;
+    }
+
+    #nextBtn {
+      background: #cccccc;
+      color: white;
+      cursor: not-allowed;
+    }
+
+    #nextBtn.active {
+      background: #4caf50;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-box">
+  <div class="quiz-number">2번 퀴즈.</div>
+  <h2>아래 분자 그림을 보고 네모 빈칸에 알맞은 숫자를 써 보자!</h2>
+
+  <!-- 🔽 물 분자 이미지 -->
+  <img src="water.png" alt="물 분자">
+
+  <div class="sentence">
+    물 분자는
+
+    <span class="blank-group">
+      <input type="number" id="ans1" class="answer">
+      <div id="hint1" class="hint-area">
+        <span class="hint-icon">⚠️</span>
+        <span class="hint-text">
+          원자는 물질을<br>이루는 알갱이야.
+        </span>
+      </div>
+    </span>
+
+    개의 원자,
+
+    <span class="blank-group">
+      <input type="number" id="ans2" class="answer">
+      <div id="hint2" class="hint-area">
+        <span class="hint-icon">⚠️</span>
+        <span class="hint-text">
+          원소는 원자(알갱이)의<br>종류를 말해.
+        </span>
+      </div>
+    </span>
+
+    가지 원소로 이루어져 있다.
+  </div>
+
+  <div class="buttons">
+    <button id="checkBtn">확인</button>
+    <button id="nextBtn">다음</button>
+  </div>
+
+  <div id="result">정답!</div>
+</div>
+
+<script>
+  // ✅ 정답 (물 분자)
+  const correct1 = 3;
+  const correct2 = 2;
+
+  const ans1 = document.getElementById("ans1");
+  const ans2 = document.getElementById("ans2");
+  const hint1 = document.getElementById("hint1");
+  const hint2 = document.getElementById("hint2");
+  const result = document.getElementById("result");
+  const nextBtn = document.getElementById("nextBtn");
+
+  document.getElementById("checkBtn").addEventListener("click", () => {
+    const val1 = Number(ans1.value);
+    const val2 = Number(ans2.value);
+
+    let correctCount = 0;
+
+    // 초기화
+    [ans1, ans2].forEach(i => i.classList.remove("correct", "wrong"));
+    [hint1, hint2].forEach(h => h.classList.remove("show"));
+    result.style.display = "none";
+    nextBtn.classList.remove("active");
+
+    if (val1 === correct1) {
+      ans1.classList.add("correct");
+      correctCount++;
+    } else {
+      ans1.classList.add("wrong");
+      hint1.classList.add("show");
+    }
+
+    if (val2 === correct2) {
+      ans2.classList.add("correct");
+      correctCount++;
+    } else {
+      ans2.classList.add("wrong");
+      hint2.classList.add("show");
+    }
+
+    if (correctCount === 2) {
+      result.style.display = "block";
+      nextBtn.classList.add("active");
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (nextBtn.classList.contains("active")) {
+      window.location.href = "quiz3.html";
+    }
+  });
+</script>
+
+</body>
+</html>
